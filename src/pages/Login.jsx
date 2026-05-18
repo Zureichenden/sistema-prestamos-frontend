@@ -14,7 +14,16 @@ export default function Login() {
       const res = await axios.post('http://localhost:8080/api/auth/login', form);
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('username', res.data.username);
-      navigate('/');
+      localStorage.setItem('roles', JSON.stringify(res.data.roles));
+
+      const roles = res.data.roles;
+      if (roles.includes('ADMIN') || roles.includes('GESTOR')) {
+        navigate('/');
+      } else if (roles.includes('AUDITOR')) {
+        navigate('/reportes');
+      } else {
+        navigate('/');
+      }
     } catch (e) {
       setError('Usuario o contraseña incorrectos');
     }

@@ -1,0 +1,204 @@
+.pageHeader { margin-bottom: 1.5rem; }
+.pageTitle { font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem; }
+.pageSubtitle { font-size: 0.875rem; color: var(--text-secondary); }
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.tab {
+  padding: 0.6rem 1.25rem;
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+}
+
+.tab:hover { color: var(--primary); }
+.tabActive { color: var(--primary); border-bottom-color: var(--primary); }
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-light);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.cardTitle { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+.cardCount { font-size: 0.85rem; color: var(--text-secondary); }
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.formGroup { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.formGroup label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.formGroup input {
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-subtle);
+  transition: all 0.2s;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+}
+
+.formActions { display: flex; gap: 0.75rem; padding-top: 0.5rem; }
+
+.rolesGrid {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.rolCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.rolCheckbox:hover { border-color: var(--primary); color: var(--primary); }
+.rolCheckboxActivo { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+
+.rolCheckbox input { display: none; }
+
+.btn {
+  padding: 0.55rem 1.25rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.btnPrimary { background: var(--primary); color: white; }
+.btnPrimary:hover { background: var(--primary-hover); }
+.btnSuccess { background: var(--success); color: white; }
+.btnDanger { background: var(--danger); color: white; }
+.btnGhost { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border); }
+.btnGhost:hover { background: var(--bg-subtle); }
+.btnWarning { background: #d97706; color: white; }
+.btnSm { padding: 0.35rem 0.75rem; font-size: 0.8rem; }
+
+.tableWrapper { overflow-x: auto; border-radius: var(--radius-sm); border: 1px solid var(--border-light); }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.tableWrapper thead tr { background: var(--bg-subtle); }
+
+.tableWrapper th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border);
+}
+
+.tableWrapper td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+  color: #334155;
+}
+
+.tableWrapper tbody tr:last-child td { border-bottom: none; }
+.tableWrapper tbody tr:hover td { background: var(--bg-subtle); }
+
+.idCell { color: var(--text-muted); font-weight: 500; }
+.actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.badge { padding: 0.25rem 0.65rem; border-radius: 20px; font-size: 0.72rem; font-weight: 600; display: inline-block; margin: 0.1rem; }
+.badgeAdmin    { background: #fee2e2; color: #b91c1c; }
+.badgeGestor   { background: #dbeafe; color: #1d4ed8; }
+.badgeAuditor  { background: #fef9c3; color: #a16207; }
+.badgeViewer   { background: #f1f5f9; color: #475569; }
+.badgeActivo   { background: #dcfce7; color: #15803d; }
+.badgeInactivo { background: #fee2e2; color: #b91c1c; }
+
+.rolesLista { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+
+.error { background: #fef2f2; border: 1px solid #fecaca; color: var(--danger); padding: 0.6rem 0.9rem; border-radius: var(--radius-sm); font-size: 0.85rem; margin-bottom: 0.75rem; }
+.success { background: var(--success-light); border: 1px solid #bbf7d0; color: var(--success); padding: 0.6rem 0.9rem; border-radius: var(--radius-sm); font-size: 0.85rem; margin-bottom: 0.75rem; }
+
+.paginacion { display: flex; align-items: center; justify-content: center; gap: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-light); margin-top: 1rem; }
+.paginacionInfo { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; }
+
+.emptyState { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
+.emptyState p { font-size: 0.9rem; margin-top: 0.5rem; }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalCard {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 2rem;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.modalTitle { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1.25rem; }

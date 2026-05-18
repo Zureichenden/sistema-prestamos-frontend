@@ -2,15 +2,30 @@ import { BrowserRouter, Routes, Route, NavLink, Navigate, useNavigate } from 're
 import Clientes from './pages/Clientes';
 import Prestamos from './pages/Prestamos';
 import Pagos from './pages/Pagos';
-import Login from './pages/Login';
 import Bitacora from './pages/Bitacora';
 import Reportes from './pages/Reportes';
-
+import Configuracion from './pages/Configuracion';
+import Login from './pages/Login';
+import { isAdmin, isGestor, isAuditor } from './utils/auth';
 import './styles/App.css';
 
-function PrivateRoute({ children }) {
+function PrivateRoute({ children, allowedRoles }) {
   const token = localStorage.getItem('token');
-  return token ? children : <Navigate to="/login" />;
+  if (!token) return <Navigate to="/login" />;
+  if (allowedRoles && !allowedRoles()) return <Navigate to="/sin-permiso" />;
+  return children;
+}
+
+function SinPermiso() {
+  return (
+    <div style={{ textAlign: 'center', padding: '4rem' }}>
+      <div style={{ fontSize: '4rem' }}>🚫</div>
+      <h2 style={{ color: '#1e293b', marginTop: '1rem' }}>Sin permiso</h2>
+      <p style={{ color: '#64748b', marginTop: '0.5rem' }}>
+        No tienes acceso a esta sección.
+      </p>
+    </div>
+  );
 }
 
 function Navbar() {
@@ -19,6 +34,7 @@ function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('roles');
     navigate('/login');
   };
 
@@ -28,12 +44,12 @@ function Navbar() {
     <nav className="navbar">
       <div className="nav-brand">🏦 Sistema de Préstamos</div>
       <div className="nav-links">
-        <NavLink to="/" end>Clientes</NavLink>
-        <NavLink to="/prestamos">Préstamos</NavLink>
-        <NavLink to="/pagos">Pagos</NavLink>
-        <NavLink to="/bitacora">Bitácora</NavLink>
-        <NavLink to="/reportes">Reportes</NavLink>
-
+        {isGestor() && <NavLink to="/" end>Clientes</NavLink>}
+        {isGestor() && <NavLink to="/prestamos">Préstamos</NavLink>}
+        {isGestor() && <NavLink to="/pagos">Pagos</NavLink>}
+        {isAuditor() && <NavLink to="/reportes">Reportes</NavLink>}
+        {isAuditor() && <NavLink to="/bitacora">Bitácora</NavLink>}
+        {isAdmin() && <NavLink to="/configuracion">⚙️ Config</NavLink>}
       </div>
       <div className="nav-user">
         <span className="nav-username">👤 {username}</span>
@@ -57,40 +73,38 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/sin-permiso" element={<Layout><SinPermiso /></Layout>} />
 
         <Route path="/" element={
-          <PrivateRoute>
+          <PrivateRoute allowedRoles={isGestor}>
             <Layout><Clientes /></Layout>
           </PrivateRoute>
         } />
-
         <Route path="/prestamos" element={
-          <PrivateRoute>
+          <PrivateRoute allowedRoles={isGestor}>
             <Layout><Prestamos /></Layout>
           </PrivateRoute>
         } />
-
         <Route path="/pagos" element={
-          <PrivateRoute>
+          <PrivateRoute allowedRoles={isGestor}>
             <Layout><Pagos /></Layout>
           </PrivateRoute>
         } />
-
-
-        <Route path="/bitacora" element={
-          <PrivateRoute>
-            <Layout><Bitacora /></Layout>
-          </PrivateRoute>
-        } />
-
         <Route path="/reportes" element={
-          <PrivateRoute>
+          <PrivateRoute allowedRoles={isAuditor}>
             <Layout><Reportes /></Layout>
           </PrivateRoute>
         } />
-
-
-
+        <Route path="/bitacora" element={
+          <PrivateRoute allowedRoles={isAuditor}>
+            <Layout><Bitacora /></Layout>
+          </PrivateRoute>
+        } />
+        <Route path="/configuracion" element={
+          <PrivateRoute allowedRoles={isAdmin}>
+            <Layout><Configuracion /></Layout>
+          </PrivateRoute>
+        } />
       </Routes>
     </BrowserRouter>
   );

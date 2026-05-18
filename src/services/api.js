@@ -57,3 +57,16 @@ export const reporteService = {
   prestamos: (inicio, fin, pagina = 0, tamanio = 10) => API.get(`/reportes/prestamos?inicio=${inicio}&fin=${fin}&pagina=${pagina}&tamanio=${tamanio}`),
   pagos: (inicio, fin, pagina = 0, tamanio = 10) => API.get(`/reportes/pagos?inicio=${inicio}&fin=${fin}&pagina=${pagina}&tamanio=${tamanio}`)
 };
+
+export const usuarioService = {
+  listar: (pagina = 0, tamanio = 10) => API.get(`/usuarios?pagina=${pagina}&tamanio=${tamanio}`),
+  crear: (data) => API.post('/usuarios', data),
+  obtener: (id) => API.get(`/usuarios/${id}`),
+  actualizarRoles: (id, roles) => API.put(`/usuarios/${id}/roles`, roles),
+  toggleActivo: (id) => API.put(`/usuarios/${id}/toggle`)
+};
+
+export const rolService = {
+  listar: () => API.get('/roles'),
+  crear: (data) => API.post('/roles', data)
+};
