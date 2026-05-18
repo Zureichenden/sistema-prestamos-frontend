@@ -38,7 +38,12 @@ export const prestamoService = {
   crear: (data) => API.post('/prestamos', data),
   amortizaciones: (prestamoId) => API.get(`/prestamos/${prestamoId}/amortizaciones`),
   exportarPdf: (prestamoId) => API.get(`/prestamos/${prestamoId}/pdf`, { responseType: 'blob' }),
-  exportarExcel: (prestamoId) => API.get(`/prestamos/${prestamoId}/excel`, { responseType: 'blob' })
+  exportarExcel: (prestamoId) => API.get(`/prestamos/${prestamoId}/excel`, { responseType: 'blob' }),
+  previewSolicitud: (data) => API.post('/prestamos/solicitud/preview', data, { responseType: 'blob' }),
+  subirContrato: (formData) => API.post('/prestamos/contrato/subir', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }),
+  descargarContrato: (nombreArchivo) => API.get(`/prestamos/contrato/${nombreArchivo}`, { responseType: 'blob' }),
 };
 
 export const pagoService = {
