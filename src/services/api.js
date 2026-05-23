@@ -75,3 +75,7 @@ export const rolService = {
   listar: () => API.get('/roles'),
   crear: (data) => API.post('/roles', data)
 };
+
+export const dashboardService = {
+  obtener: () => API.get('/dashboard')
+};

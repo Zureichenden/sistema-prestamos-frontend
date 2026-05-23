@@ -6,6 +6,7 @@ import Bitacora from './pages/Bitacora';
 import Reportes from './pages/Reportes';
 import Configuracion from './pages/Configuracion';
 import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
 import { isAdmin, isGestor, isAuditor } from './utils/auth';
 import './styles/App.css';
 
@@ -50,6 +51,8 @@ function Navbar() {
         {isAuditor() && <NavLink to="/reportes">Reportes</NavLink>}
         {isAuditor() && <NavLink to="/bitacora">Bitácora</NavLink>}
         {isAdmin() && <NavLink to="/configuracion">⚙️ Config</NavLink>}
+        <NavLink to="/dashboard">📊 Dashboard</NavLink>
+
       </div>
       <div className="nav-user">
         <span className="nav-username">👤 {username}</span>
@@ -103,6 +106,11 @@ function App() {
         <Route path="/configuracion" element={
           <PrivateRoute allowedRoles={isAdmin}>
             <Layout><Configuracion /></Layout>
+          </PrivateRoute>
+        } />
+        <Route path="/dashboard" element={
+          <PrivateRoute>
+            <Layout><Dashboard /></Layout>
           </PrivateRoute>
         } />
       </Routes>
