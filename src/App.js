@@ -7,6 +7,8 @@ import Reportes from './pages/Reportes';
 import Configuracion from './pages/Configuracion';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import MiPerfil from './pages/MiPerfil';
+
 import { isAdmin, isGestor, isAuditor } from './utils/auth';
 import './styles/App.css';
 
@@ -51,7 +53,11 @@ function Navbar() {
         {isAuditor() && <NavLink to="/reportes">Reportes</NavLink>}
         {isAuditor() && <NavLink to="/bitacora">Bitácora</NavLink>}
         {isAdmin() && <NavLink to="/configuracion">⚙️ Config</NavLink>}
+        
         <NavLink to="/dashboard">📊 Dashboard</NavLink>
+        <NavLink to="/mi-perfil" style={{ textDecoration: 'none' }}>
+          <span className="nav-username">👤 {username}</span>
+        </NavLink>
 
       </div>
       <div className="nav-user">
@@ -111,6 +117,11 @@ function App() {
         <Route path="/dashboard" element={
           <PrivateRoute>
             <Layout><Dashboard /></Layout>
+          </PrivateRoute>
+        } />
+        <Route path="/mi-perfil" element={
+          <PrivateRoute>
+            <Layout><MiPerfil /></Layout>
           </PrivateRoute>
         } />
       </Routes>

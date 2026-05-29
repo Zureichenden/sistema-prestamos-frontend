@@ -17,10 +17,29 @@ export default function Configuracion() {
   const [mensaje, setMensaje] = useState('');
   const TAMANIO = 10;
 
+  const [formPassword, setFormPassword] = useState({
+    passwordActual: '',
+    passwordNueva: '',
+    confirmarPassword: ''
+  });
+  const [errorPassword, setErrorPassword] = useState('');
+  const [mensajePassword, setMensajePassword] = useState('');
+
   useEffect(() => {
     cargarRoles();
     cargarUsuarios(0);
   }, []);
+
+  const handleCambiarPassword = async () => {
+    setErrorPassword(''); setMensajePassword('');
+    try {
+      await usuarioService.cambiarPassword(formPassword);
+      setMensajePassword('Contraseña actualizada correctamente');
+      setFormPassword({ passwordActual: '', passwordNueva: '', confirmarPassword: '' });
+    } catch (e) {
+      setErrorPassword(e.response?.data?.error || 'Error al cambiar contraseña');
+    }
+  };
 
   const cargarUsuarios = async (pag) => {
     const res = await usuarioService.listar(pag, TAMANIO);
@@ -110,7 +129,8 @@ export default function Configuracion() {
       <div className={styles.tabs}>
         {[
           { key: 'usuarios', label: '👤 Usuarios' },
-          { key: 'roles', label: '🔑 Roles' }
+          { key: 'roles', label: '🔑 Roles' },
+          { key: 'password', label: '🔒 Mi Contraseña' }
         ].map(t => (
           <button key={t.key}
             className={`${styles.tab} ${tabActiva === t.key ? styles.tabActive : ''}`}
@@ -291,6 +311,55 @@ export default function Configuracion() {
             </div>
           </div>
         </>
+      )}
+
+      {tabActiva === 'password' && (
+        <div className={styles.card}>
+          <div className={styles.cardHeader}>
+            <span className={styles.cardTitle}>🔒 Cambiar Contraseña</span>
+          </div>
+          <div style={{ maxWidth: '400px' }}>
+            <div className={styles.formGrid} style={{ gridTemplateColumns: '1fr' }}>
+              <div className={styles.formGroup}>
+                <label>Contraseña Actual</label>
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  value={formPassword.passwordActual}
+                  onChange={e => setFormPassword({ ...formPassword, passwordActual: e.target.value })}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label>Nueva Contraseña</label>
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  value={formPassword.passwordNueva}
+                  onChange={e => setFormPassword({ ...formPassword, passwordNueva: e.target.value })}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label>Confirmar Nueva Contraseña</label>
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  value={formPassword.confirmarPassword}
+                  onChange={e => setFormPassword({ ...formPassword, confirmarPassword: e.target.value })}
+                />
+              </div>
+            </div>
+            {errorPassword && <div className={styles.error}>⚠️ {errorPassword}</div>}
+            {mensajePassword && <div className={styles.success}>✅ {mensajePassword}</div>}
+            <div className={styles.formActions}>
+              <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={handleCambiarPassword}>
+                🔒 Cambiar Contraseña
+              </button>
+            </div>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.75rem' }}>
+              ℹ️ La contraseña debe tener al menos 6 caracteres.
+            </p>
+          </div>
+        </div>
       )}
 
       {modalRoles && (

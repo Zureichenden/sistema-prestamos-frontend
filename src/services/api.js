@@ -16,11 +16,18 @@ API.interceptors.request.use((config) => {
 API.interceptors.response.use(
   response => response,
   error => {
-    if (error.response?.status === 403 || error.response?.status === 401) {
+    const status = error.response?.status;
+    const tieneError = error.response?.data?.error;
+
+    // Solo redirige si es 401 o 403 con mensaje de token inválido
+    // no si es un error de validación de negocio
+    if (status === 401 && tieneError === 'Token inválido o expirado') {
       localStorage.removeItem('token');
       localStorage.removeItem('username');
+      localStorage.removeItem('roles');
       window.location.href = '/login';
     }
+
     return Promise.reject(error);
   }
 );
@@ -68,7 +75,8 @@ export const usuarioService = {
   crear: (data) => API.post('/usuarios', data),
   obtener: (id) => API.get(`/usuarios/${id}`),
   actualizarRoles: (id, roles) => API.put(`/usuarios/${id}/roles`, roles),
-  toggleActivo: (id) => API.put(`/usuarios/${id}/toggle`)
+  toggleActivo: (id) => API.put(`/usuarios/${id}/toggle`),
+  cambiarPassword: (data) => API.put('/usuarios/cambiar-password', data),
 };
 
 export const rolService = {
