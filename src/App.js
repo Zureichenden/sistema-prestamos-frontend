@@ -8,6 +8,7 @@ import Configuracion from './pages/Configuracion';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import MiPerfil from './pages/MiPerfil';
+import Empleados from './pages/Empleados';
 
 import { isAdmin, isGestor, isAuditor } from './utils/auth';
 import './styles/App.css';
@@ -53,6 +54,7 @@ function Navbar() {
         {isAuditor() && <NavLink to="/reportes">Reportes</NavLink>}
         {isAuditor() && <NavLink to="/bitacora">Bitácora</NavLink>}
         {isAdmin() && <NavLink to="/configuracion">⚙️ Config</NavLink>}
+        {isAdmin() && <NavLink to="/empleados">👥 Empleados</NavLink>}
         
         <NavLink to="/dashboard">📊 Dashboard</NavLink>
         <NavLink to="/mi-perfil" style={{ textDecoration: 'none' }}>
@@ -124,6 +126,13 @@ function App() {
             <Layout><MiPerfil /></Layout>
           </PrivateRoute>
         } />
+        <Route path="/empleados" element={
+          <PrivateRoute allowedRoles={isAdmin}>
+            <Layout><Empleados /></Layout>
+          </PrivateRoute>
+        } />
+
+
       </Routes>
     </BrowserRouter>
   );

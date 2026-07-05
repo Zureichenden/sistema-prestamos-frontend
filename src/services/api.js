@@ -87,3 +87,55 @@ export const rolService = {
 export const dashboardService = {
   obtener: () => API.get('/dashboard')
 };
+
+export const rhService = {
+  // Puestos
+  listarPuestos: () => API.get('/rh/puestos/todos'),
+  crearPuesto: (data) => API.post('/rh/puestos', data),
+  actualizarPuesto: (id, data) => API.put(`/rh/puestos/${id}`, data),
+  eliminarPuesto: (id) => API.delete(`/rh/puestos/${id}`),
+
+  // Departamentos
+  listarDepartamentos: () => API.get('/rh/departamentos/todos'),
+  crearDepartamento: (data) => API.post('/rh/departamentos', data),
+  actualizarDepartamento: (id, data) => API.put(`/rh/departamentos/${id}`, data),
+  eliminarDepartamento: (id) => API.delete(`/rh/departamentos/${id}`),
+
+  // Salarios
+  listarSalarios: () => API.get('/rh/salarios/todos'),
+  crearSalario: (data) => API.post('/rh/salarios', data),
+  actualizarSalario: (id, data) => API.put(`/rh/salarios/${id}`, data),
+  eliminarSalario: (id) => API.delete(`/rh/salarios/${id}`)
+};
+
+export const empleadoService = {
+  listar: (pagina = 0, tamanio = 10) => API.get(`/empleados?pagina=${pagina}&tamanio=${tamanio}`),
+  listarActivos: (pagina = 0, tamanio = 10) => API.get(`/empleados/activos?pagina=${pagina}&tamanio=${tamanio}`),
+  obtener: (id) => API.get(`/empleados/${id}`),
+  crear: (data) => API.post('/empleados', data),
+  actualizar: (id, data) => API.put(`/empleados/${id}`, data),
+  cambiarPuesto: (id, puestoId) => API.put(`/empleados/${id}/puesto/${puestoId}`),
+  cambiarDepartamento: (id, deptoId) => API.put(`/empleados/${id}/departamento/${deptoId}`),
+  cambiarSalario: (id, salarioId) => API.put(`/empleados/${id}/salario/${salarioId}`),
+  darBaja: (id) => API.put(`/empleados/${id}/baja`),
+  reactivar: (id) => API.put(`/empleados/${id}/reactivar`),
+
+  // Direcciones
+  listarDirecciones: (id) => API.get(`/empleados/${id}/direcciones`),
+  agregarDireccion: (id, data) => API.post(`/empleados/${id}/direcciones`, data),
+  eliminarDireccion: (id) => API.delete(`/empleados/direcciones/${id}`),
+
+  // Teléfonos
+  listarTelefonos: (id) => API.get(`/empleados/${id}/telefonos`),
+  agregarTelefono: (id, data) => API.post(`/empleados/${id}/telefonos`, data),
+  eliminarTelefono: (id) => API.delete(`/empleados/telefonos/${id}`),
+
+  // Beneficiarios
+  listarBeneficiarios: (id) => API.get(`/empleados/${id}/beneficiarios`),
+  agregarBeneficiario: (id, data) => API.post(`/empleados/${id}/beneficiarios`, data),
+  eliminarBeneficiario: (id) => API.delete(`/empleados/beneficiarios/${id}`),
+
+  // Bitácora
+  listarBitacora: (id) => API.get(`/empleados/${id}/bitacora`),
+  listarTodaBitacora: (pagina = 0, tamanio = 10) => API.get(`/empleados/bitacora/todos?pagina=${pagina}&tamanio=${tamanio}`)
+};
