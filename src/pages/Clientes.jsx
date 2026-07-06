@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { clienteService } from '../services/api';
+import clienteService from '../services/clienteService';
+
 import styles from './Clientes.module.css';
 
 export default function Clientes() {

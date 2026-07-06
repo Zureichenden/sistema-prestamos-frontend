@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { clienteService, prestamoService, pagoService } from '../services/api';
+import clienteService from '../services/clienteService';
+import prestamoService from '../services/prestamoService';
+import pagoService from '../services/pagoService';
 import styles from './Pagos.module.css';
 
 export default function Pagos() {

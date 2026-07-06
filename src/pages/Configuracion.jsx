@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { usuarioService, rolService } from '../services/api';
+import usuarioService from '../services/usuarioService';
+import rolService from '../services/rolService';
 import styles from './Configuracion.module.css';
 
 export default function Configuracion() {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { reporteService } from '../services/api';
+import reporteService from '../services/reporteService';
 import styles from './Reportes.module.css';
 
 const hoy = new Date().toISOString().split('T')[0];

@@ -3,7 +3,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, Legend, LineChart, Line, ResponsiveContainer
 } from 'recharts';
-import { dashboardService } from '../services/api';
+import dashboardService from '../services/dashboardService';
 import styles from './Dashboard.module.css';
 
 export default function Dashboard() {

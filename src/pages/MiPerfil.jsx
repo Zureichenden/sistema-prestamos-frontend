@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { usuarioService } from '../services/api';
+import usuarioService from '../services/usuarioService';
 import { getRoles } from '../utils/auth';
 import styles from './MiPerfil.module.css';
 

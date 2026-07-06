@@ -1,0 +1,135 @@
+.pageHeader { margin-bottom: 1.5rem; }
+.pageTitle { font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem; }
+.pageSubtitle { font-size: 0.875rem; color: var(--text-secondary); }
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-light);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.cardTitle { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+.cardCount { font-size: 0.85rem; color: var(--text-secondary); }
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.formGroup { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.formGroup label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.formGroup input {
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-subtle);
+  transition: all 0.2s;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+}
+
+.formActions { display: flex; gap: 0.75rem; padding-top: 0.5rem; }
+
+.btn {
+  padding: 0.55rem 1.25rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.btnPrimary { background: var(--primary); color: white; }
+.btnPrimary:hover { background: var(--primary-hover); }
+.btnDanger { background: var(--danger); color: white; }
+.btnGhost { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border); }
+.btnGhost:hover { background: var(--bg-subtle); }
+.btnSm { padding: 0.35rem 0.75rem; font-size: 0.8rem; }
+
+.tableWrapper { overflow-x: auto; border-radius: var(--radius-sm); border: 1px solid var(--border-light); }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.tableWrapper thead tr { background: var(--bg-subtle); }
+
+.tableWrapper th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border);
+}
+
+.tableWrapper td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+  color: #334155;
+}
+
+.tableWrapper tbody tr:last-child td { border-bottom: none; }
+.tableWrapper tbody tr:hover td { background: var(--bg-subtle); }
+
+.idCell { color: var(--text-muted); font-weight: 500; }
+.actions { display: flex; gap: 0.4rem; }
+
+.nivelBadge {
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.montoBadge {
+  background: #dcfce7;
+  color: #15803d;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.error { background: #fef2f2; border: 1px solid #fecaca; color: var(--danger); padding: 0.6rem 0.9rem; border-radius: var(--radius-sm); font-size: 0.85rem; margin-bottom: 0.75rem; }
+.success { background: var(--success-light); border: 1px solid #bbf7d0; color: var(--success); padding: 0.6rem 0.9rem; border-radius: var(--radius-sm); font-size: 0.85rem; margin-bottom: 0.75rem; }
+
+.emptyState { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
+.emptyState p { font-size: 0.9rem; margin-top: 0.5rem; }

@@ -9,7 +9,9 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import MiPerfil from './pages/MiPerfil';
 import Empleados from './pages/Empleados';
-
+import Puestos from './pages/rh/Puestos';
+import Departamentos from './pages/rh/Departamentos';
+import Salarios from './pages/rh/Salarios';
 import { isAdmin, isGestor, isAuditor } from './utils/auth';
 import './styles/App.css';
 
@@ -55,7 +57,10 @@ function Navbar() {
         {isAuditor() && <NavLink to="/bitacora">Bitácora</NavLink>}
         {isAdmin() && <NavLink to="/configuracion">⚙️ Config</NavLink>}
         {isAdmin() && <NavLink to="/empleados">👥 Empleados</NavLink>}
-        
+        {isAdmin() && <NavLink to="/puestos">💼 Puestos</NavLink>}
+        {isAdmin() && <NavLink to="/departamentos">🏢 Deptos</NavLink>}
+        {isAdmin() && <NavLink to="/salarios">💰 Salarios</NavLink>}
+
         <NavLink to="/dashboard">📊 Dashboard</NavLink>
         <NavLink to="/mi-perfil" style={{ textDecoration: 'none' }}>
           <span className="nav-username">👤 {username}</span>
@@ -129,6 +134,21 @@ function App() {
         <Route path="/empleados" element={
           <PrivateRoute allowedRoles={isAdmin}>
             <Layout><Empleados /></Layout>
+          </PrivateRoute>
+        } />
+        <Route path="/puestos" element={
+          <PrivateRoute allowedRoles={isAdmin}>
+            <Layout><Puestos /></Layout>
+          </PrivateRoute>
+        } />
+        <Route path="/departamentos" element={
+          <PrivateRoute allowedRoles={isAdmin}>
+            <Layout><Departamentos /></Layout>
+          </PrivateRoute>
+        } />
+        <Route path="/salarios" element={
+          <PrivateRoute allowedRoles={isAdmin}>
+            <Layout><Salarios /></Layout>
           </PrivateRoute>
         } />
 

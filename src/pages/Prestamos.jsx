@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { clienteService, prestamoService } from '../services/api';
+import clienteService from '../services/clienteService';
+import prestamoService from '../services/prestamoService';
 import styles from './Prestamos.module.css';
 
 const PASOS = ['📋 Datos', '📄 Solicitud', '📤 Contrato', '✅ Confirmar'];

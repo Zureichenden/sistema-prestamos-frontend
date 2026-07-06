@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { bitacoraService } from '../services/api';
+import bitacoraService from '../services/bitacoraService';
+
 import styles from './Bitacora.module.css';
 
 export default function Bitacora() {

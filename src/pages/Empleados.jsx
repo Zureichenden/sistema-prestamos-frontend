@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { empleadoService, rhService } from '../services/api';
+import empleadoService from '../services/rh/empleadoService';
+import rhService from '../services/rh/rhService';
 import styles from './Empleados.module.css';
 
 export default function Empleados() {
