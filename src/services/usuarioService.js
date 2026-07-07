@@ -7,7 +7,9 @@ const usuarioService = {
   obtener: (id) => http.get(`/usuarios/${id}`),
   actualizarRoles: (id, roles) => http.put(`/usuarios/${id}/roles`, roles),
   toggleActivo: (id) => http.put(`/usuarios/${id}/toggle`),
-  cambiarPassword: (data) => http.put('/usuarios/cambiar-password', data)
+  cambiarPassword: (data) => http.put('/usuarios/cambiar-password', data),
+  crearParaEmpleado: (empleadoId, data) => http.post(`/usuarios/empleado/${empleadoId}`, data),
+  btenerPorEmpleado: (empleadoId) => http.get(`/usuarios/empleado/${empleadoId}`),
 };
 
 export default usuarioService;

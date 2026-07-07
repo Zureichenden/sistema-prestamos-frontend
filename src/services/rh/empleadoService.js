@@ -28,7 +28,10 @@ const empleadoService = {
 
   listarBitacora: (id) => http.get(`/empleados/${id}/bitacora`),
   listarTodaBitacora: (pagina = 0, tamanio = 10) =>
-    http.get(`/empleados/bitacora/todos?pagina=${pagina}&tamanio=${tamanio}`)
+    http.get(`/empleados/bitacora/todos?pagina=${pagina}&tamanio=${tamanio}`),
+
+  crearUsuario: (empleadoId, data) => http.post(`/usuarios/empleado/${empleadoId}`, data),
+  obtenerUsuario: (empleadoId) => http.get(`/usuarios/empleado/${empleadoId}`),
 };
 
 export default empleadoService;
