@@ -27,11 +27,15 @@ const empleadoService = {
   eliminarBeneficiario: (id) => http.delete(`/empleados/beneficiarios/${id}`),
 
   listarBitacora: (id) => http.get(`/empleados/${id}/bitacora`),
-  listarTodaBitacora: (pagina = 0, tamanio = 10) =>
-    http.get(`/empleados/bitacora/todos?pagina=${pagina}&tamanio=${tamanio}`),
+  listarTodaBitacora: (pagina = 0, tamanio = 10) => http.get(`/empleados/bitacora/todos?pagina=${pagina}&tamanio=${tamanio}`),
 
   crearUsuario: (empleadoId, data) => http.post(`/usuarios/empleado/${empleadoId}`, data),
   obtenerUsuario: (empleadoId) => http.get(`/usuarios/empleado/${empleadoId}`),
+  actualizarDireccion: (id, data) => http.put(`/empleados/direcciones/${id}`, data),
+  actualizarTelefono: (id, data) => http.put(`/empleados/telefonos/${id}`, data),
+  actualizarBeneficiario: (id, data) => http.put(`/empleados/beneficiarios/${id}`, data),
+
+
 };
 
 export default empleadoService;

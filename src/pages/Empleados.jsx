@@ -43,6 +43,9 @@ export default function Empleados() {
   const [formEditar, setFormEditar] = useState({});
   const [errorDetalle, setErrorDetalle] = useState('');
   const [mensajeDetalle, setMensajeDetalle] = useState('');
+  const [editandoDireccion, setEditandoDireccion] = useState(null);
+  const [editandoTelefono, setEditandoTelefono] = useState(null);
+  const [editandoBeneficiario, setEditandoBeneficiario] = useState(null);
 
   useEffect(() => {
     cargarEmpleados(0);
@@ -622,22 +625,65 @@ const handleCambiarDepartamento = async (deptoId) => {
                 {direcciones.length > 0 && (
                   <div className={styles.tableWrapper} style={{ marginTop: '1rem' }}>
                     <table>
-                      <thead><tr><th>Calle</th><th>Colonia</th><th>Ciudad</th><th>Tipo</th><th></th></tr></thead>
+                      <thead>
+                        <tr><th>Calle</th><th>Colonia</th><th>Ciudad</th><th>Tipo</th><th>Acciones</th></tr>
+                      </thead>
                       <tbody>
                         {direcciones.map(d => (
                           <tr key={d.id}>
-                            <td>{d.calle}</td>
-                            <td>{d.colonia}</td>
-                            <td>{d.ciudad}</td>
-                            <td>{d.tipo}</td>
-                            <td>
-                              <button className={`${styles.btn} ${styles.btnDanger} ${styles.btnSm}`}
-                                onClick={async () => {
-                                  await empleadoService.eliminarDireccion(d.id);
-                                  const res = await empleadoService.listarDirecciones(empleadoSeleccionado.id);
-                                  setDirecciones(res.data);
-                                }}>Eliminar</button>
-                            </td>
+                            {editandoDireccion?.id === d.id ? (
+                              <>
+                                <td><input value={editandoDireccion.calle}
+                                  onChange={e => setEditandoDireccion({ ...editandoDireccion, calle: e.target.value })}
+                                  style={{ width: '100%', padding: '0.3rem', border: '1px solid var(--border)', borderRadius: 4 }} /></td>
+                                <td><input value={editandoDireccion.colonia}
+                                  onChange={e => setEditandoDireccion({ ...editandoDireccion, colonia: e.target.value })}
+                                  style={{ width: '100%', padding: '0.3rem', border: '1px solid var(--border)', borderRadius: 4 }} /></td>
+                                <td><input value={editandoDireccion.ciudad}
+                                  onChange={e => setEditandoDireccion({ ...editandoDireccion, ciudad: e.target.value })}
+                                  style={{ width: '100%', padding: '0.3rem', border: '1px solid var(--border)', borderRadius: 4 }} /></td>
+                                <td>
+                                  <select value={editandoDireccion.tipo}
+                                    onChange={e => setEditandoDireccion({ ...editandoDireccion, tipo: e.target.value })}
+                                    style={{ padding: '0.3rem', border: '1px solid var(--border)', borderRadius: 4 }}>
+                                    <option value="CASA">Casa</option>
+                                    <option value="TRABAJO">Trabajo</option>
+                                  </select>
+                                </td>
+                                <td>
+                                  <div className={styles.actions}>
+                                    <button className={`${styles.btn} ${styles.btnSuccess} ${styles.btnSm}`}
+                                      onClick={async () => {
+                                        await empleadoService.actualizarDireccion(editandoDireccion.id, editandoDireccion);
+                                        const res = await empleadoService.listarDirecciones(empleadoSeleccionado.id);
+                                        setDirecciones(res.data);
+                                        setEditandoDireccion(null);
+                                      }}>💾</button>
+                                    <button className={`${styles.btn} ${styles.btnGhost} ${styles.btnSm}`}
+                                      onClick={() => setEditandoDireccion(null)}>✕</button>
+                                  </div>
+                                </td>
+                              </>
+                            ) : (
+                              <>
+                                <td>{d.calle}</td>
+                                <td>{d.colonia}</td>
+                                <td>{d.ciudad}</td>
+                                <td>{d.tipo}</td>
+                                <td>
+                                  <div className={styles.actions}>
+                                    <button className={`${styles.btn} ${styles.btnPrimary} ${styles.btnSm}`}
+                                      onClick={() => setEditandoDireccion({ ...d })}>✏️</button>
+                                    <button className={`${styles.btn} ${styles.btnDanger} ${styles.btnSm}`}
+                                      onClick={async () => {
+                                        await empleadoService.eliminarDireccion(d.id);
+                                        const res = await empleadoService.listarDirecciones(empleadoSeleccionado.id);
+                                        setDirecciones(res.data);
+                                      }}>🗑️</button>
+                                  </div>
+                                </td>
+                              </>
+                            )}
                           </tr>
                         ))}
                       </tbody>
@@ -646,6 +692,7 @@ const handleCambiarDepartamento = async (deptoId) => {
                 )}
               </div>
             )}
+           
 
             {/* TELÉFONOS */}
             {subtabDetalle === 'telefonos' && (
@@ -672,20 +719,56 @@ const handleCambiarDepartamento = async (deptoId) => {
                 {telefonos.length > 0 && (
                   <div className={styles.tableWrapper} style={{ marginTop: '1rem' }}>
                     <table>
-                      <thead><tr><th>Número</th><th>Tipo</th><th></th></tr></thead>
+                      <thead><tr><th>Número</th><th>Tipo</th><th>Acciones</th></tr></thead>
                       <tbody>
                         {telefonos.map(t => (
                           <tr key={t.id}>
-                            <td>{t.numero}</td>
-                            <td>{t.tipo}</td>
-                            <td>
-                              <button className={`${styles.btn} ${styles.btnDanger} ${styles.btnSm}`}
-                                onClick={async () => {
-                                  await empleadoService.eliminarTelefono(t.id);
-                                  const res = await empleadoService.listarTelefonos(empleadoSeleccionado.id);
-                                  setTelefonos(res.data);
-                                }}>Eliminar</button>
-                            </td>
+                            {editandoTelefono?.id === t.id ? (
+                              <>
+                                <td><input value={editandoTelefono.numero}
+                                  onChange={e => setEditandoTelefono({ ...editandoTelefono, numero: e.target.value })}
+                                  style={{ width: '100%', padding: '0.3rem', border: '1px solid var(--border)', borderRadius: 4 }} /></td>
+                                <td>
+                                  <select value={editandoTelefono.tipo}
+                                    onChange={e => setEditandoTelefono({ ...editandoTelefono, tipo: e.target.value })}
+                                    style={{ padding: '0.3rem', border: '1px solid var(--border)', borderRadius: 4 }}>
+                                    <option value="CELULAR">Celular</option>
+                                    <option value="CASA">Casa</option>
+                                    <option value="TRABAJO">Trabajo</option>
+                                  </select>
+                                </td>
+                                <td>
+                                  <div className={styles.actions}>
+                                    <button className={`${styles.btn} ${styles.btnSuccess} ${styles.btnSm}`}
+                                      onClick={async () => {
+                                        await empleadoService.actualizarTelefono(editandoTelefono.id, editandoTelefono);
+                                        const res = await empleadoService.listarTelefonos(empleadoSeleccionado.id);
+                                        setTelefonos(res.data);
+                                        setEditandoTelefono(null);
+                                      }}>💾</button>
+                                    <button className={`${styles.btn} ${styles.btnGhost} ${styles.btnSm}`}
+                                      onClick={() => setEditandoTelefono(null)}>✕</button>
+                                  </div>
+                                </td>
+                              </>
+                            ) : (
+                              <>
+                                <td>{t.numero}</td>
+                                <td>{t.tipo}</td>
+                                <td>
+                                  <div className={styles.actions}>
+                                    <button className={`${styles.btn} ${styles.btnPrimary} ${styles.btnSm}`}
+                                      onClick={() => setEditandoTelefono({ ...t })}>✏️</button>
+                                    <button className={`${styles.btn} ${styles.btnDanger} ${styles.btnSm}`}
+                                      onClick={async () => {
+                                        await empleadoService.eliminarTelefono(t.id);
+                                        const res = await empleadoService.listarTelefonos(empleadoSeleccionado.id);
+                                        setTelefonos(res.data);
+                                      }}>🗑️</button>
+                                  </div>
+                                </td>
+                              </>
+                            )}
                           </tr>
                         ))}
                       </tbody>
@@ -694,6 +777,7 @@ const handleCambiarDepartamento = async (deptoId) => {
                 )}
               </div>
             )}
+        
 
             {/* BENEFICIARIOS */}
             {subtabDetalle === 'beneficiarios' && (
@@ -736,21 +820,74 @@ const handleCambiarDepartamento = async (deptoId) => {
                 {beneficiarios.length > 0 && (
                   <div className={styles.tableWrapper} style={{ marginTop: '1rem' }}>
                     <table>
-                      <thead><tr><th>Nombre</th><th>Parentesco</th><th>%</th><th></th></tr></thead>
+                      <thead>
+                        <tr><th>Nombre</th><th>Parentesco</th><th>%</th><th>Teléfono</th><th>Acciones</th></tr>
+                      </thead>
                       <tbody>
                         {beneficiarios.map(b => (
                           <tr key={b.id}>
-                            <td>{b.nombre} {b.apellido}</td>
-                            <td>{b.parentesco}</td>
-                            <td>{b.porcentaje}%</td>
-                            <td>
-                              <button className={`${styles.btn} ${styles.btnDanger} ${styles.btnSm}`}
-                                onClick={async () => {
-                                  await empleadoService.eliminarBeneficiario(b.id);
-                                  const res = await empleadoService.listarBeneficiarios(empleadoSeleccionado.id);
-                                  setBeneficiarios(res.data);
-                                }}>Eliminar</button>
-                            </td>
+                            {editandoBeneficiario?.id === b.id ? (
+                              <>
+                                <td>
+                                  <input value={editandoBeneficiario.nombre}
+                                    onChange={e => setEditandoBeneficiario({ ...editandoBeneficiario, nombre: e.target.value })}
+                                    style={{ width: '100%', padding: '0.3rem', border: '1px solid var(--border)', borderRadius: 4 }} />
+                                  <input value={editandoBeneficiario.apellido}
+                                    onChange={e => setEditandoBeneficiario({ ...editandoBeneficiario, apellido: e.target.value })}
+                                    style={{ width: '100%', padding: '0.3rem', border: '1px solid var(--border)', borderRadius: 4, marginTop: 4 }} />
+                                </td>
+                                <td>
+                                  <input value={editandoBeneficiario.parentesco}
+                                    onChange={e => setEditandoBeneficiario({ ...editandoBeneficiario, parentesco: e.target.value })}
+                                    style={{ width: '100%', padding: '0.3rem', border: '1px solid var(--border)', borderRadius: 4 }} />
+                                </td>
+                                <td>
+                                  <input type="number" value={editandoBeneficiario.porcentaje}
+                                    onChange={e => setEditandoBeneficiario({ ...editandoBeneficiario, porcentaje: e.target.value })}
+                                    style={{ width: '70px', padding: '0.3rem', border: '1px solid var(--border)', borderRadius: 4 }} />
+                                </td>
+                                <td>
+                                  <input value={editandoBeneficiario.telefono || ''}
+                                    onChange={e => setEditandoBeneficiario({ ...editandoBeneficiario, telefono: e.target.value })}
+                                    style={{ width: '100%', padding: '0.3rem', border: '1px solid var(--border)', borderRadius: 4 }} />
+                                </td>
+                                <td>
+                                  <div className={styles.actions}>
+                                    <button className={`${styles.btn} ${styles.btnSuccess} ${styles.btnSm}`}
+                                      onClick={async () => {
+                                        await empleadoService.actualizarBeneficiario(editandoBeneficiario.id, {
+                                          ...editandoBeneficiario,
+                                          porcentaje: parseFloat(editandoBeneficiario.porcentaje)
+                                        });
+                                        const res = await empleadoService.listarBeneficiarios(empleadoSeleccionado.id);
+                                        setBeneficiarios(res.data);
+                                        setEditandoBeneficiario(null);
+                                      }}>💾</button>
+                                    <button className={`${styles.btn} ${styles.btnGhost} ${styles.btnSm}`}
+                                      onClick={() => setEditandoBeneficiario(null)}>✕</button>
+                                  </div>
+                                </td>
+                              </>
+                            ) : (
+                              <>
+                                <td>{b.nombre} {b.apellido}</td>
+                                <td>{b.parentesco}</td>
+                                <td>{b.porcentaje}%</td>
+                                <td>{b.telefono || '—'}</td>
+                                <td>
+                                  <div className={styles.actions}>
+                                    <button className={`${styles.btn} ${styles.btnPrimary} ${styles.btnSm}`}
+                                      onClick={() => setEditandoBeneficiario({ ...b })}>✏️</button>
+                                    <button className={`${styles.btn} ${styles.btnDanger} ${styles.btnSm}`}
+                                      onClick={async () => {
+                                        await empleadoService.eliminarBeneficiario(b.id);
+                                        const res = await empleadoService.listarBeneficiarios(empleadoSeleccionado.id);
+                                        setBeneficiarios(res.data);
+                                      }}>🗑️</button>
+                                  </div>
+                                </td>
+                              </>
+                            )}
                           </tr>
                         ))}
                       </tbody>
@@ -759,6 +896,7 @@ const handleCambiarDepartamento = async (deptoId) => {
                 )}
               </div>
             )}
+        
 
             {/* BITÁCORA */}
             {subtabDetalle === 'bitacora' && (
